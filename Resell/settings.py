@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-)^owwsya#ru!c^*m1^t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Twilio Settings
 TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
