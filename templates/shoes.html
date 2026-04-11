@@ -1,0 +1,735 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Premium Footwear - Hopping Shop
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    /* Professional Design Tokens */
+    :root {
+        --accent-color: #59ab6e;
+        --accent-dark: #3e754d;
+        --accent-soft: #e8f5e9;
+        --text-main: #2d3436;
+        --text-secondary: #636e72;
+        --bg-page: #fdfdfd;
+        --bg-sidebar: #ffffff;
+        --border-color: #edf2f7;
+        --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* VIBRANT COLORFUL SIDEBAR - NORMAL SCROLLING */
+    .filter-sidebar-container {
+        padding: 20px;
+        background: var(--bg-sidebar);
+        border-radius: 20px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+        margin-bottom: 2rem;
+    }
+
+    .filter-main-title {
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-main);
+    }
+
+    .filter-main-title i {
+        color: var(--accent-color);
+        background: var(--accent-soft);
+        padding: 10px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+    }
+
+    .filter-group {
+        margin-bottom: 1rem;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+
+    .filter-group:hover {
+        border-color: var(--accent-color);
+    }
+
+    .filter-section-title {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        background: var(--bg-secondary);
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-main);
+        transition: all 0.3s ease;
+    }
+
+    .brand-header { border-left: 4px solid #3498db; }
+    .type-header { border-left: 4px solid #e67e22; }
+    .price-header { border-left: 4px solid #9b59b6; }
+
+    .filter-section-title:not(.collapsed) {
+        background: var(--accent-color);
+        color: white;
+        border-left-width: 0;
+    }
+
+    .filter-section-title i.chevron {
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+    }
+
+    .filter-section-title:not(.collapsed) i.chevron {
+        transform: rotate(180deg);
+        color: white;
+    }
+
+    .filter-content {
+        padding: 1rem 1.25rem;
+        background: white;
+    }
+
+    .filter-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .filter-list li {
+        margin-bottom: 0.8rem;
+    }
+
+    .filter-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.2s;
+    }
+
+    .filter-link:hover {
+        color: var(--accent-color);
+        transform: translateX(5px);
+    }
+
+    .filter-link::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border: 2px solid #ddd;
+        border-radius: 50%;
+        transition: all 0.2s;
+    }
+
+    .filter-link:hover::before {
+        border-color: var(--accent-color);
+        background: var(--accent-color);
+    }
+
+    /* SHOP HEADER & SORT BY HIGHLIGHT */
+    .shop-header {
+        display: flex;
+        justify-content: flex-end; /* Move to right */
+        align-items: center;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .sort-dropdown-btn {
+        background-color: var(--accent-color);
+        color: white;
+        font-weight: 700;
+        padding: 8px 20px;
+        border-radius: 30px;
+        border: none;
+        transition: 0.3s;
+        box-shadow: 0 4px 10px rgba(89, 171, 110, 0.2);
+    }
+
+    .sort-dropdown-btn:hover {
+        background-color: var(--accent-dark);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(89, 171, 110, 0.3);
+    }
+
+    /* PRODUCT CARD STYLES */
+    .product-card {
+        border: 1px solid rgba(0,0,0,0.03);
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image-container {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        background-color: var(--bg-secondary);
+    }
+
+    .product-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s ease;
+    }
+
+    /* CARD DIVIDER HIGHLIGHT */
+    .card-divider {
+        width: 80%;
+        height: 3px;
+        background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+        margin: 0 auto;
+        border-radius: 5px;
+        opacity: 0.8;
+    }
+
+    .product-info {
+        padding: 1.75rem 1.25rem;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-brand {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin-bottom: 8px;
+    }
+
+    .product-name {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-main);
+        text-decoration: none;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .product-price {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--text-main);
+        background: var(--bg-secondary);
+        padding: 4px 12px;
+        border-radius: 30px;
+    }
+
+    .g-card-gap {
+        --bs-gutter-x: 2rem;
+        --bs-gutter-y: 2.5rem;
+    }
+
+    @media (max-width: 991px) {
+        .filter-sidebar-container {
+            margin-bottom: 3rem;
+        }
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row">
+        
+        <!-- SIDEBAR -->
+        <div class="col-lg-3 ps-lg-0">
+            <div class="filter-sidebar-container" style="margin-top: 4.8rem;">
+                
+                <h4 class="filter-main-title">
+                    <i class="fas fa-sliders-h"></i> Filters
+                </h4>
+
+                <!-- Brand Filter -->
+                <div class="filter-group">
+                    <button class="filter-section-title brand-header collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brandList">
+                        <span><i class="fas fa-tag me-2"></i> Brand</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="brandList">
+                        <div class="filter-content">
+                            <ul class="filter-list">
+                                <li><a href="#" class="filter-link">Nike</a></li>
+                                <li><a href="#" class="filter-link">Adidas</a></li>
+                                <li><a href="#" class="filter-link">Puma</a></li>
+                                <li><a href="#" class="filter-link">Reebok</a></li>
+                                <li><a href="#" class="filter-link">New Balance</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type Filter -->
+                <div class="filter-group">
+                    <button class="filter-section-title type-header collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#typeList">
+                        <span><i class="fas fa-shoe-prints me-2"></i> Type</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="typeList">
+                        <div class="filter-content">
+                            <ul class="filter-list">
+                                <li><a href="{% url "runing_shoes" %}" class="filter-link">Running Shoes</a></li>
+                                <li><a href="#" class="filter-link">Lifestyle</a></li>
+                                <li><a href="#" class="filter-link">Basketball</a></li>
+                                <li><a href="#" class="filter-link">Training</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="filter-group">
+                    <button class="filter-section-title price-header collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#priceList">
+                        <span><i class="fas fa-wallet me-2"></i> Price</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="priceList">
+                        <div class="filter-content">
+                            <ul class="filter-list">
+                                <li><a href="#" class="filter-link">Under $100</a></li>
+                                <li><a href="#" class="filter-link">$100 - $250</a></li>
+                                <li><a href="#" class="filter-link">$250 - $500</a></li>
+                                <li><a href="#" class="filter-link">Over $500</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MAIN SHOP CONTENT -->
+        <div class="col-lg-9">
+            
+            <div class="shop-header">
+                <!-- Removed results count text -->
+                <div class="dropdown">
+                    <button class="btn sort-dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Sort By <i class="fas fa-sort-amount-down ms-1"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
+                        <li><a class="dropdown-item" href="#">Newest Arrivals</a></li>
+                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
+                <!-- Product 1 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes1.jpg' %}" alt="Running Shoes">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_1' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_1' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Nike</span>
+                            <a href="{% url 'shoe_1' %}" class="p-title">Air Max Platinum Pro</a>
+                            <div class="p-footer">
+                                <span class="p-price">$199.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shose2.jpg' %}" alt="Lifestyle Shoes">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_2' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_2' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Adidas</span>
+                            <a href="{% url 'shoe_2' %}" class="p-title">Ultraboost Midnight Edition</a>
+                            <div class="p-footer">
+                                <span class="p-price">$499.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes3.jpg' %}" alt="Sport Runner">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_3' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_3' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Puma</span>
+                            <a href="{% url 'shoe_3' %}" class="p-title">RS-X Neon Sport Runner</a>
+                            <div class="p-footer">
+                                <span class="p-price">$349.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes4.jpg' %}" alt="Retro White">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_4' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_4' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Reebok</span>
+                            <a href="{% url 'shoe_4' %}" class="p-title">Classic Leather Retro White</a>
+                            <div class="p-footer">
+                                <span class="p-price">$279.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes5.jpg' %}" alt="Electric Core">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_5' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_5' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Nike</span>
+                            <a href="{% url 'shoe_5' %}" class="p-title">Revolution Electric Core</a>
+                            <div class="p-footer">
+                                <span class="p-price">$129.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes6.jpg' %}" alt="Urban Trainer">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_6' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_6' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Adidas</span>
+                            <a href="{% url 'shoe_6' %}" class="p-title">Street Style Urban Trainer</a>
+                            <div class="p-footer">
+                                <span class="p-price">$379.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes7.jpg' %}" alt="Nitro Pro">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_7' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_7' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Puma</span>
+                            <a href="{% url 'shoe_7' %}" class="p-title">Velocity Nitro Pro Performance</a>
+                            <div class="p-footer">
+                                <span class="p-price">$599.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes8.jpg' %}" alt="Heritage Classic">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_8' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_8' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">New Balance</span>
+                            <a href="{% url 'shoe_8' %}" class="p-title">574 Heritage Classic Series</a>
+                            <div class="p-footer">
+                                <span class="p-price">$449.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 9 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes9.jpg' %}" alt="High Street Red">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_9' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_9' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Nike</span>
+                            <a href="{% url 'shoe_9' %}" class="p-title">Air Jordan High Street Red</a>
+                            <div class="p-footer">
+                                <span class="p-price">$699.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 10 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes10.jpg' %}" alt="Forum Low">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_10' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_10' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Adidas</span>
+                            <a href="{% url 'shoe_10' %}" class="p-title">Forum Low Classic White</a>
+                            <div class="p-footer">
+                                <span class="p-price">$349.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 11 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes11.jpg' %}" alt="Future Rider">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_11' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_11' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Puma</span>
+                            <a href="{% url 'shoe_11' %}" class="p-title">Future Rider Play On Sneakers</a>
+                            <div class="p-footer">
+                                <span class="p-price">$259.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 12 -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/shoes12.jpg' %}" alt="Charged Running">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'shoe_12' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'shoe_12' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Under Armour</span>
+                            <a href="{% url 'shoe_12' %}" class="p-title">Charged Running Core Series</a>
+                            <div class="p-footer">
+                                <span class="p-price">$189.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

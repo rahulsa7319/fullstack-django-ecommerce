@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign In - Hopping Shop{% endblock title %}
+
+{% block content %}
+<div class="auth-wrapper py-5 d-flex align-items-center" style="min-height: 80vh; background: var(--p-bg);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: var(--radius-2xl);">
+                    <div class="row g-0">
+                        <!-- Info Side (Beautified) -->
+                        <div class="col-lg-5 d-none d-lg-flex flex-column p-5 text-white position-relative" 
+                             style="background: linear-gradient(135deg, #064e3b 0%, #000 100%); overflow: hidden;">
+                            
+                            <!-- Decorative Circle Elements -->
+                            <div class="position-absolute" style="top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+                            <div class="position-absolute" style="bottom: -80px; left: -80px; width: 300px; height: 300px; background: rgba(255,255,255,0.03); border-radius: 50%;"></div>
+                            
+                            <div class="position-relative z-index-1 h-100 d-flex flex-column">
+                                <div class="brand-logo mb-5">
+                                    <h1 class="h2 fw-bold" style="letter-spacing: -1px;">Hopping<span style="color: #59ab6e;">.</span></h1>
+                                </div>
+                                
+                                <div class="welcome-content mb-auto">
+                                    <h2 class="display-6 fw-bold mb-4" style="font-family: 'Plus Jakarta Sans'; line-height: 1.2;">Elevate Your <br><span style="color: #59ab6e;">Shopping</span> Style</h2>
+                                    <p class="lead opacity-75 mb-5" style="font-size: 1.1rem;">Join our community of trendsetters. Sign in to access your curated collections and premium offers.</p>
+                                    
+                                    <div class="features-list">
+                                        <div class="d-flex align-items-center mb-4">
+                                            <div class="feature-icon-wrapper me-3">
+                                                <i class="fas fa-shipping-fast"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 fw-bold">Priority Delivery</h6>
+                                                <p class="small opacity-75 mb-0 text-white">Get your orders faster than ever.</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-4">
+                                            <div class="feature-icon-wrapper me-3">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 fw-bold">Secure Checkout</h6>
+                                                <p class="small opacity-75 mb-0 text-white">Your data is protected with us.</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="feature-icon-wrapper me-3">
+                                                <i class="fas fa-tags"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 fw-bold">Member Deals</h6>
+                                                <p class="small opacity-75 mb-0 text-white">Exclusive access to member-only prices.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="footer-note mt-5 pt-4 border-top border-white border-opacity-10">
+                                    <p class="small opacity-50 mb-0">&copy; 2026 Hopping Shop. All Rights Reserved.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Form Side (Reordered) -->
+                        <div class="col-lg-7 p-4 p-md-5 bg-white">
+                            <div class="d-flex justify-content-between align-items-center mb-5">
+                                <h3 class="fw-bold m-0">Sign In</h3>
+                                <a href="{% url 'home' %}" class="text-muted text-decoration-none small"><i class="fas fa-arrow-left me-2"></i>Back to Store</a>
+                            </div>
+
+                            <form method="POST" class="auth-form">
+                                {% csrf_token %}
+                                <!-- 1. Username -->
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-uppercase tracking-wider">Username</label>
+                                    <div class="input-group-premium">
+                                        <i class="fas fa-user"></i>
+                                        {{ form.username }}
+                                    </div>
+                                    {% if form.username.errors %}
+                                        <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- 2. Phone Number -->
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-uppercase tracking-wider">Phone Number</label>
+                                    <div class="input-group-premium">
+                                        <i class="fas fa-phone"></i>
+                                        {{ form.phone_number }}
+                                    </div>
+                                    {% if form.phone_number.errors %}
+                                        <div class="text-danger small mt-1">{{ form.phone_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- 3. Password -->
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between">
+                                        <label class="form-label small fw-bold text-uppercase tracking-wider">Password</label>
+                                        <a href="#" class="small text-accent text-decoration-none">Forgot?</a>
+                                    </div>
+                                    <div class="input-group-premium">
+                                        <i class="fas fa-lock"></i>
+                                        {{ form.password }}
+                                    </div>
+                                    {% if form.password.errors %}
+                                        <div class="text-danger small mt-1">{{ form.password.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- 4. Captcha -->
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-uppercase tracking-wider">Verification</label>
+                                    <div class="captcha-premium-container p-3 border rounded-4 bg-light text-center">
+                                        <div class="captcha-image-wrapper mb-3 position-relative d-inline-block">
+                                            <div class="captcha-render-box">
+                                                {{ form.captcha }}
+                                            </div>
+                                            <a href="javascript:void(0)" class="js-captcha-refresh btn-refresh-captcha" title="Refresh Code">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </a>
+                                        </div>
+                                        <div class="form-text small text-muted">Enter the characters shown above.</div>
+                                    </div>
+                                    {% if form.captcha.errors %}
+                                        <div class="text-danger small mt-2 fw-bold">
+                                            <i class="fas fa-exclamation-triangle me-1"></i>{{ form.captcha.errors|striptags }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <button type="submit" class="btn-p btn-p-primary w-100 py-3 justify-content-center mb-4">
+                                    Sign In to Account
+                                </button>
+                            </form>
+
+                            <div class="text-center">
+                                <p class="text-muted small">Don't have an account yet? 
+                                    <a href="{% url 'register' %}" class="fw-bold text-success text-decoration-none ms-1">Create Account</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .feature-icon-wrapper {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #59ab6e;
+    }
+
+    .input-group-premium {
+        position: relative;
+    }
+    
+    .input-group-premium i {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--p-text-muted);
+        font-size: 1.1rem;
+        transition: var(--transition);
+        z-index: 10;
+    }
+    
+    .form-control-p {
+        width: 100%;
+        padding: 14px 20px 14px 55px !important;
+        border-radius: var(--radius-lg);
+        border: 2px solid var(--p-border);
+        background: var(--p-bg);
+        font-weight: 500;
+        transition: var(--transition);
+    }
+    
+    .form-control-p:focus {
+        outline: none;
+        border-color: var(--p-accent);
+        background: white;
+        box-shadow: 0 0 0 4px var(--p-accent-soft);
+    }
+    
+    .form-control-p:focus + i {
+        color: var(--p-accent);
+    }
+    
+    .tracking-wider {
+        letter-spacing: 0.05em;
+    }
+    
+    .text-accent {
+        color: var(--p-accent);
+    }
+
+    /* Premium Captcha Styling */
+    .captcha-premium-container {
+        border: 2px solid var(--p-border) !important;
+        transition: var(--transition);
+    }
+    
+    .captcha-premium-container:focus-within {
+        border-color: var(--p-accent) !important;
+        background: white !important;
+    }
+
+    .captcha-image-wrapper {
+        background: white;
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .captcha-image-wrapper img {
+        border-radius: 8px;
+        height: 50px;
+        width: auto;
+    }
+    
+    .captcha-image-wrapper input {
+        display: block;
+        width: 100%;
+        margin-top: 15px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: 2px solid var(--p-border);
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        transition: var(--transition);
+    }
+
+    .captcha-image-wrapper input:focus {
+        border-color: var(--p-accent);
+        outline: none;
+        box-shadow: 0 0 0 3px var(--p-accent-soft);
+    }
+
+    .btn-refresh-captcha {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 32px;
+        height: 32px;
+        background: var(--p-accent);
+        color: white !important;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        transition: var(--transition);
+        text-decoration: none;
+    }
+
+    .btn-refresh-captcha:hover {
+        transform: rotate(180deg);
+        background: var(--p-primary);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // AJAX Captcha Refresh
+        const refreshBtn = document.querySelector('.js-captcha-refresh');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                fetch('/accounts/captcha/refresh/')
+                    .then(response => response.json())
+                    .then(data => {
+                        const captchaImg = document.querySelector('.captcha');
+                        const captchaHash = document.querySelector('#id_captcha_0');
+                        if (captchaImg && captchaHash) {
+                            captchaImg.src = data.image_url;
+                            captchaHash.value = data.key;
+                        }
+                    });
+            });
+        }
+    });
+</script>
+{% endblock content %}

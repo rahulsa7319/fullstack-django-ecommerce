@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Owner Dashboard - Hopping{% endblock title %}
+
+{% block content %}
+<div class="owner-dashboard-wrapper">
+    <!-- Animated Colorful Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container py-5 position-relative" style="z-index: 10;">
+        <!-- Header Section with Animation -->
+        <div class="row mb-5 animate-slide-down">
+            <div class="col-lg-12">
+                <h1 class="owner-greeting mb-2">Hello <span class="name-gradient">{{ user.username|title }}</span>,</h1>
+                <h2 class="system-title">System Owner & Chief Administrator</h2>
+                <div class="status-badge mt-3">
+                    <span class="pulse-dot"></span> System Live & Secure
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="owner-stat-card card-blue animate-pop" style="animation-delay: 0.1s;">
+                    <div class="card-icon"><i class="fas fa-box"></i></div>
+                    <div class="card-content">
+                        <h3>{{ total_products }}</h3>
+                        <p>Total Inventory</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="owner-stat-card card-green animate-pop" style="animation-delay: 0.2s;">
+                    <div class="card-icon"><i class="fas fa-users"></i></div>
+                    <div class="card-content">
+                        <h3>{{ total_users }}</h3>
+                        <p>Registered Users</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="owner-stat-card card-purple animate-pop" style="animation-delay: 0.3s;">
+                    <div class="card-icon"><i class="fas fa-coins"></i></div>
+                    <div class="card-content">
+                        <h3>${{ total_revenue|floatformat:2 }}</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="owner-stat-card card-orange animate-pop" style="animation-delay: 0.4s;">
+                    <div class="card-icon"><i class="fas fa-shopping-basket"></i></div>
+                    <div class="card-content">
+                        <h3>{{ pending_orders }}</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Management Grid -->
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="owner-glass-panel animate-fade-in" style="animation-delay: 0.5s;">
+                    <div class="panel-header d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="mb-0">System Overview</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">Last 7 Days</button>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <div class="empty-state-icon mb-3">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <p class="text-muted">Detailed analytics and growth charts are being synchronized...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="owner-glass-panel animate-fade-in" style="animation-delay: 0.6s;">
+                    <h4 class="mb-4">Quick Management</h4>
+                    <div class="management-links">
+                        <a href="{% url 'add_product' %}" class="manage-link">
+                            <div class="link-icon bg-indigo"><i class="fas fa-plus"></i></div>
+                            <span>Add New Product</span>
+                            <i class="fas fa-chevron-right ms-auto"></i>
+                        </a>
+                        <a href="{% url 'add_category' %}" class="manage-link">
+                            <div class="link-icon bg-cyan"><i class="fas fa-folder-plus"></i></div>
+                            <span>Create Category</span>
+                            <i class="fas fa-chevron-right ms-auto"></i>
+                        </a>
+                        <a href="{% url 'home' %}?view_front=true" class="manage-link">
+                            <div class="link-icon bg-blue-500" style="background: #3b82f6;"><i class="fas fa-globe"></i></div>
+                            <span>View Front End</span>
+                            <i class="fas fa-chevron-right ms-auto"></i>
+                        </a>
+                        <a href="#" class="manage-link">
+                            <div class="link-icon bg-amber"><i class="fas fa-user-edit"></i></div>
+                            <span>Manage Users</span>
+                            <i class="fas fa-chevron-right ms-auto"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Dashboard Specific Layout */
+    .owner-dashboard-wrapper {
+        min-height: 100vh;
+        background: #f0f4f8;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 50px;
+    }
+
+    /* Background Blobs */
+    .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: 1;
+        opacity: 0.4;
+        animation: blob-float 20s infinite alternate;
+    }
+    .blob-1 { width: 500px; height: 500px; background: #4f46e5; top: -100px; right: -100px; }
+    .blob-2 { width: 400px; height: 400px; background: #06b6d4; bottom: -50px; left: -50px; animation-delay: -5s; }
+    .blob-3 { width: 300px; height: 300px; background: #ec4899; top: 40%; left: 30%; animation-delay: -10s; }
+
+    @keyframes blob-float {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(50px, 100px) scale(1.1); }
+    }
+
+    /* Typography */
+    .owner-greeting { font-size: 3rem; font-weight: 900; color: #0f172a; }
+    .name-gradient {
+        background: linear-gradient(135deg, #4f46e5, #06b6d4, #ec4899);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: hue-rotate 10s infinite linear;
+    }
+    @keyframes hue-rotate {
+        from { filter: hue-rotate(0deg); }
+        to { filter: hue-rotate(360deg); }
+    }
+    .system-title { font-size: 1.5rem; font-weight: 700; color: #64748b; }
+
+    /* Status Badge */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 20px;
+        background: #fff;
+        border-radius: 50px;
+        font-weight: 700;
+        color: #0f172a;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .pulse-dot {
+        width: 10px;
+        height: 10px;
+        background: #10b981;
+        border-radius: 50%;
+        position: relative;
+    }
+    .pulse-dot::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        background: #10b981;
+        border-radius: 50%;
+        opacity: 0.4;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.4; }
+        100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    /* Admin Buttons */
+    .admin-glass-btn {
+        padding: 12px 25px;
+        background: #0f172a;
+        color: white !important;
+        text-decoration: none !important;
+        border-radius: 15px;
+        font-weight: 700;
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
+    }
+    .admin-glass-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(15, 23, 42, 0.3); }
+    .admin-glass-btn.secondary { background: white; color: #0f172a !important; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+    /* Stat Cards */
+    .owner-stat-card {
+        padding: 40px 30px;
+        border-radius: 35px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(255,255,255,0.4);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+    .owner-stat-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+    
+    /* Vibrant Gradients for Cards */
+    .card-blue { background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; }
+    .card-green { background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; }
+    .card-purple { background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); color: #6b21a8; }
+    .card-orange { background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); color: #9a3412; }
+
+    .card-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+        margin-bottom: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .card-content h3 { 
+        font-size: 3.5rem; 
+        font-weight: 900; 
+        margin-bottom: 5px; 
+        letter-spacing: -2px;
+        line-height: 1;
+    }
+    .card-content p { 
+        font-weight: 800; 
+        font-size: 1.1rem; 
+        margin-bottom: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.8;
+    }
+
+    /* Panels */
+    .owner-glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        padding: 40px;
+        border-radius: 40px;
+        border: 1px solid rgba(255,255,255,0.5);
+        height: 100%;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+    }
+    .owner-glass-panel h4 { font-weight: 900; color: #0f172a; }
+
+    /* Manage Links */
+    .manage-link {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background: white;
+        border-radius: 20px;
+        text-decoration: none !important;
+        color: #0f172a !important;
+        font-weight: 700;
+        margin-bottom: 15px;
+        transition: 0.3s;
+        border: 1px solid #f1f5f9;
+    }
+    .manage-link:hover { transform: translateX(10px); background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+    .link-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+    .bg-indigo { background: #6366f1; }
+    .bg-cyan { background: #06b6d4; }
+    .bg-amber { background: #f59e0b; }
+
+    /* Animations */
+    .animate-slide-down { animation: slide-down 0.8s ease-out; }
+    @keyframes slide-down { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+    .animate-pop { animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+    @keyframes pop { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+    .animate-fade-in { animation: fade-in 1s ease-out both; }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+</style>
+{% endblock content %}

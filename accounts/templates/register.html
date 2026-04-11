@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Account - Happing Shop{% endblock title %}
+
+{% block content %}
+<div class="auth-wrapper py-5 d-flex align-items-center" style="min-height: 80vh; background: var(--p-bg);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: var(--radius-2xl);">
+                    <div class="row g-0">
+                        <!-- Info Side -->
+                        <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center p-5 text-white" 
+                             style="background: linear-gradient(135deg, var(--p-accent) 0%, var(--p-accent-dark) 100%);">
+                            <h2 class="display-6 fw-bold mb-4" style="font-family: 'Plus Jakarta Sans';">Join Us!</h2>
+                            <p class="lead opacity-90 mb-5">Create your free account today and start experiencing a new standard in lifestyle shopping.</p>
+                            
+                            <div class="perks">
+                                <div class="perk-item d-flex align-items-start mb-4">
+                                    <div class="perk-icon me-3 mt-1"><i class="fas fa-shipping-fast"></i></div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Fast Delivery</h6>
+                                        <p class="small opacity-75 mb-0">Priority shipping on all your orders.</p>
+                                    </div>
+                                </div>
+                                <div class="perk-item d-flex align-items-start mb-4">
+                                    <div class="perk-icon me-3 mt-1"><i class="fas fa-shield-alt"></i></div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Secure Checkout</h6>
+                                        <p class="small opacity-75 mb-0">Your data is always encrypted and safe.</p>
+                                    </div>
+                                </div>
+                                <div class="perk-item d-flex align-items-start">
+                                    <div class="perk-icon me-3 mt-1"><i class="fas fa-gift"></i></div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Loyalty Rewards</h6>
+                                        <p class="small opacity-75 mb-0">Earn points on every purchase you make.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Form Side -->
+                        <div class="col-lg-7 p-4 p-md-5 bg-white">
+                            <div class="d-flex justify-content-between align-items-center mb-5">
+                                <h3 class="fw-bold m-0">Register</h3>
+                                <a href="{% url 'home' %}" class="text-muted text-decoration-none small"><i class="fas fa-arrow-left me-2"></i>Back</a>
+                            </div>
+
+                            <form id="registerForm" method="POST" class="auth-form">
+                                {% csrf_token %}
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label small fw-bold text-uppercase">Username</label>
+                                        <div class="input-group-premium">
+                                            <i class="fas fa-user"></i>
+                                            <input type="text" name="username" class="form-control-p" placeholder="Your name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label small fw-bold text-uppercase">Mobile</label>
+                                        <div class="input-group-premium">
+                                            <i class="fas fa-phone-alt"></i>
+                                            <input type="text" name="mobilenumber" class="form-control-p" placeholder="+91..." required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-uppercase">Email Address</label>
+                                    <div class="input-group-premium">
+                                        <i class="fas fa-envelope"></i>
+                                        <input type="email" name="email" class="form-control-p" placeholder="email@example.com" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-uppercase">Password</label>
+                                    <div class="input-group-premium">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" name="password" class="form-control-p" placeholder="Create a strong password" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 form-check">
+                                    <input type="checkbox" class="form-check-input" id="terms" required>
+                                    <label class="form-check-label small text-muted" for="terms">I agree to the <a href="#" class="text-success text-decoration-none">Terms & Conditions</a></label>
+                                </div>
+
+                                <button type="submit" class="btn-p btn-p-primary w-100 py-3 justify-content-center mb-4">
+                                    Create Free Account
+                                </button>
+                            </form>
+
+                            <div class="text-center">
+                                <p class="text-muted small">Already a member? 
+                                    <a href="{% url 'login' %}" class="fw-bold text-success text-decoration-none ms-1">Sign In instead</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .input-group-premium {
+        position: relative;
+    }
+    
+    .input-group-premium i {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--p-text-muted);
+        font-size: 1.1rem;
+        transition: var(--transition);
+    }
+    
+    .form-control-p {
+        width: 100%;
+        padding: 14px 20px 14px 55px;
+        border-radius: var(--radius-lg);
+        border: 2px solid var(--p-border);
+        background: var(--p-bg);
+        font-weight: 500;
+        transition: var(--transition);
+    }
+    
+    .form-control-p:focus {
+        outline: none;
+        border-color: var(--p-accent);
+        background: white;
+        box-shadow: 0 0 0 4px var(--p-accent-soft);
+    }
+    
+    .form-control-p:focus + i {
+        color: var(--p-accent);
+    }
+    
+    .perk-icon {
+        font-size: 1.5rem;
+        width: 45px;
+        height: 45px;
+        background: rgba(255,255,255,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+    }
+</style>
+{% endblock content %}

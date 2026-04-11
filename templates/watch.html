@@ -1,0 +1,549 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Watches - Happing Shop{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        
+        <!-- SIDEBAR -->
+        <div class="col-lg-3">
+            <div class="sidebar-premium sticky-top" style="top: 100px; z-index: 1;">
+                <h4 class="mb-4 d-flex align-items-center" style="font-weight: 800;">
+                    <i class="fas fa-sliders-h me-3 text-success"></i> Filters
+                </h4>
+
+                <div class="accordion accordion-flush shadow-sm rounded-4 overflow-hidden" id="filterAccordion">
+                    <!-- Brands -->
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold p-4 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#brandCollapse">
+                                Brands
+                            </button>
+                        </h2>
+                        <div id="brandCollapse" class="accordion-collapse collapse">
+                            <div class="accordion-body p-2 bg-white">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#" class="filter-link-p">Rolex</a></li>
+                                    <li><a href="#" class="filter-link-p">Omega</a></li>
+                                    <li><a href="#" class="filter-link-p">Seiko</a></li>
+                                    <li><a href="#" class="filter-link-p">Casio</a></li>
+                                    <li><a href="#" class="filter-link-p">Tissot</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Type -->
+                    <div class="accordion-item border-0 mt-1">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold p-4 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#typeCollapse">
+                                Watch Type
+                            </button>
+                        </h2>
+                        <div id="typeCollapse" class="accordion-collapse collapse">
+                            <div class="accordion-body p-2 bg-white">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#" class="filter-link-p">Analog</a></li>
+                                    <li><a href="#" class="filter-link-p">Digital</a></li>
+                                    <li><a href="#" class="filter-link-p">Smart Watches</a></li>
+                                    <li><a href="#" class="filter-link-p">Chronograph</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="accordion-item border-0 mt-1">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold p-4 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#priceCollapse">
+                                Price Range
+                            </button>
+                        </h2>
+                        <div id="priceCollapse" class="accordion-collapse collapse">
+                            <div class="accordion-body p-4 bg-white">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="p1">
+                                    <label class="form-check-label" for="p1">Under $100</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="p2">
+                                    <label class="form-check-label" for="p2">$100 - $500</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="p3">
+                                    <label class="form-check-label" for="p3">$500 & Above</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN SHOP CONTENT -->
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h1 class="h3 mb-1" style="font-weight: 800; letter-spacing: -0.5px;">Luxury Timepieces</h1>
+                    <p class="text-muted small mb-0">Discover our curated collection of premium watches.</p>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-p-outline dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown">
+                        Sort By
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2" style="border-radius: var(--radius-lg); overflow: hidden;">
+                        <li><a class="dropdown-item py-2 px-4" href="#">Newest Arrivals</a></li>
+                        <li><a class="dropdown-item py-2 px-4" href="#">Price: Low to High</a></li>
+                        <li><a class="dropdown-item py-2 px-4" href="#">Price: High to Low</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Product Card 1 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <span class="p-badge">Featured</span>
+                            <img src="{% static "assets/img/watch1.jpg" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_1' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_1' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Rolex</span>
+                            <a href="{% url 'watch_1' %}" class="p-title">Classic Analog Masterpiece</a>
+                            <div class="p-footer">
+                                <span class="p-price">$199.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch2.jpg" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_2' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_2' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Omega</span>
+                            <a href="{% url 'watch_2' %}" class="p-title">Luxury Sport Watch</a>
+                            <div class="p-footer">
+                                <span class="p-price">$499.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch3.jpg" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_3' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_3' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Apple</span>
+                            <a href="{% url 'watch_3' %}" class="p-title">Smart Watch Pro</a>
+                            <div class="p-footer">
+                                <span class="p-price">$349.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch4.webp" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_4' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_4' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Tissot</span>
+                            <a href="{% url 'watch_4' %}" class="p-title">Elegant Dress Watch</a>
+                            <div class="p-footer">
+                                <span class="p-price">$279.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch5.webp" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_5' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_5' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Casio</span>
+                            <a href="{% url 'watch_5' %}" class="p-title">Digital Sports Watch</a>
+                            <div class="p-footer">
+                                <span class="p-price">$129.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch6.webp" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_6' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_6' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Seiko</span>
+                            <a href="{% url 'watch_6' %}" class="p-title">Vintage Classic Watch</a>
+                            <div class="p-footer">
+                                <span class="p-price">$379.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 7 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch7.jpg" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_7' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_7' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Tissot</span>
+                            <a href="{% url 'watch_7' %}" class="p-title">Premium Chronograph</a>
+                            <div class="p-footer">
+                                <span class="p-price">$249.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 8 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch8.webp" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_8' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_8' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Seiko</span>
+                            <a href="{% url 'watch_8' %}" class="p-title">Modern Minimalist</a>
+                            <div class="p-footer">
+                                <span class="p-price">$159.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 9 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch9.webp" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_9' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_9' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Omega</span>
+                            <a href="{% url 'watch_9' %}" class="p-title">Explorer Edition</a>
+                            <div class="p-footer">
+                                <span class="p-price">$299.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 10 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch10.jpg" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_10' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_10' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Rolex</span>
+                            <a href="{% url 'watch_10' %}" class="p-title">Deep Sea Diver</a>
+                            <div class="p-footer">
+                                <span class="p-price">$599.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 11 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch11.webp" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_11' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_11' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Apple</span>
+                            <a href="{% url 'watch_11' %}" class="p-title">Tech Smart Edition</a>
+                            <div class="p-footer">
+                                <span class="p-price">$399.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 12 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static "assets/img/watch12.jpg" %}" alt="Watch">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'watch_12' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'watch_12' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Rolex</span>
+                            <a href="{% url 'watch_12' %}" class="p-title">Heritage Gold</a>
+                            <div class="p-footer">
+                                <span class="p-price">$899.99</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center mt-5">
+                <nav>
+                    <ul class="pagination pagination-p">
+                        <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .filter-link-p {
+        display: block;
+        padding: 12px 20px;
+        color: var(--p-text-body);
+        text-decoration: none;
+        transition: var(--transition);
+        border-radius: var(--radius-md);
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+    
+    .filter-link-p:hover {
+        background: var(--p-bg);
+        color: var(--p-accent);
+        transform: translateX(5px);
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: transparent;
+        color: var(--p-accent);
+        box-shadow: none;
+    }
+    
+    .accordion-button::after {
+        background-size: 1rem;
+    }
+
+    .pagination-p .page-link {
+        border: none;
+        color: var(--p-text-body);
+        margin: 0 5px;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+    }
+
+    .pagination-p .page-item.active .page-link {
+        background-color: var(--p-primary);
+        color: white;
+        box-shadow: var(--shadow-md);
+    }
+
+    .pagination-p .page-link:hover:not(.active) {
+        background-color: var(--p-border);
+        color: var(--p-primary);
+    }
+</style>
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% load static %}
+<footer class="footer-premium">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-4 col-md-6">
+                <a class="logo-premium text-white mb-4 d-block" href="{% url 'home' %}">
+                    happing<span style="color: var(--p-accent);">.</span>
+                </a>
+                <p class="mb-4">Experience the pinnacle of modern e-commerce. We bring you curated collections of premium lifestyle products, from high-end fashion to timeless accessories.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="col-lg-2 col-md-6">
+                <h5>Categories</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="footer-link">Footwear</a></li>
+                    <li><a href="#" class="footer-link">Timepieces</a></li>
+                    <li><a href="#" class="footer-link">Fashion</a></li>
+                    <li><a href="#" class="footer-link">Accessories</a></li>
+                    <li><a href="#" class="footer-link">New Arrivals</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <h5>Information</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+                    {% if not user.is_superuser %}
+                    <li><a href="{% url 'about' %}" class="footer-link">About Us</a></li>
+                    <li><a href="{% url 'shop' %}" class="footer-link">Our Shop</a></li>
+                    <li><a href="{% url 'contact' %}" class="footer-link">Contact Us</a></li>
+                    {% endif %}
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <h5>Newsletter</h5>
+                <p class="mb-4">Subscribe to receive updates, access to exclusive deals, and more.</p>
+                <div class="newsletter-form-premium" style="position: relative;">
+                    <input type="email" placeholder="Enter your email" style="width: 100%; padding: 15px 120px 15px 25px; border-radius: var(--radius-full); border: none; background: rgba(255,255,255,0.05); color: white; outline: none;">
+                    <button class="btn-p btn-p-accent" style="position: absolute; right: 5px; top: 5px; padding: 10px 25px;">Join</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-top border-secondary mt-5 pt-4 text-center">
+            <p class="small mb-0 text-muted">
+                &copy; 2026 Happing Shop. All rights reserved. | Designed with <i class="fas fa-heart text-danger"></i> by Rahul
+            </p>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,553 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Happing - Product Detail Page
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    :root {
+        --accent-color: #59ab6e;
+        --accent-dark: #3e754d;
+        --accent-soft: #e8f5e9;
+        --text-main: #2d3436;
+        --text-secondary: #636e72;
+        --border-color: #edf2f7;
+        --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+        background-color: #ffffff;
+    }
+
+    /* PREMIUM PRODUCT LAYOUT (NO SIDEBAR) */
+    .product-container {
+        padding-top: 50px;
+        padding-bottom: 80px;
+    }
+
+    /* LEFT SIDE: MODERN GALLERY */
+    .gallery-wrapper {
+        display: flex;
+        gap: 20px;
+    }
+
+    .thumbnail-strip {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 80px;
+    }
+
+    .thumb-item {
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: 0.2s;
+    }
+
+    .thumb-item:hover, .thumb-item.active {
+        border-color: var(--accent-color);
+        transform: translateX(5px);
+    }
+
+    .thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .main-image-viewport {
+        flex-grow: 1;
+        border-radius: 24px;
+        overflow: hidden;
+        background: #f8f9fa;
+        position: relative;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .main-image-viewport img {
+        width: 100%;
+        height: 742px;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    .main-image-viewport:hover img {
+        transform: scale(1.05);
+    }
+
+    /* RIGHT SIDE: STICKY INFO */
+    .product-details-sticky {
+        position: sticky;
+        top: 100px;
+    }
+
+    .brand-tag {
+        color: var(--accent-color);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .product-title-big {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-main);
+        line-height: 1.1;
+        margin-bottom: 15px;
+    }
+
+    .price-tag-big {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--accent-color);
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .old-price {
+        font-size: 1.2rem;
+        text-decoration: line-through;
+        color: #b2bec3;
+        font-weight: 600;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+
+    .feature-list i {
+        color: var(--accent-color);
+        font-size: 0.8rem;
+    }
+
+    /* BUTTONS */
+    .btn-action-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-premium-buy {
+        flex: 2;
+        background: var(--text-main);
+        color: white;
+        border: none;
+        padding: 18px;
+        border-radius: 15px;
+        font-weight: 800;
+        transition: 0.3s;
+    }
+
+    .btn-premium-buy:hover {
+        background: #000;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn-premium-cart {
+        flex: 1;
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 18px;
+        border-radius: 15px;
+        font-weight: 800;
+        transition: 0.3s;
+    }
+
+    .btn-premium-cart:hover {
+        background: var(--accent-dark);
+        transform: translateY(-3px);
+    }
+
+    /* RELATED PRODUCTS SCROLLBAR */
+    .related-section {
+        background: #fdfdfd;
+        padding: 80px 0;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .related-scroll-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 25px;
+        padding: 20px 0;
+        scroll-behavior: smooth;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .related-scroll-container::-webkit-scrollbar { display: none; }
+
+    .related-card {
+        min-width: 280px;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        transition: 0.3s;
+    }
+
+    .related-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 991px) {
+        .gallery-wrapper { flex-direction: column-reverse; }
+        .thumbnail-strip { flex-direction: row; width: 100%; }
+        .product-title-big { font-size: 2rem; }
+    }
+
+    /* BUTTONS ON HOVER */
+    .hover-overlay {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        width: 90%;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        opacity: 0;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        z-index: 10;
+    }
+
+    .product-card:hover .hover-overlay,
+    .related-card:hover .hover-overlay {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    .overlay-btn {
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        transition: 0.2s;
+        flex: 1;
+        white-space: nowrap;
+    }
+    
+    .btn-buy {
+        background: var(--accent-color);
+        color: white;
+        border: 1px solid var(--accent-color);
+    }
+    
+    .btn-buy:hover {
+        background: var(--accent-dark);
+        border-color: var(--accent-dark);
+        color: white;
+    }
+    
+    .btn-cart {
+        background: white;
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+    }
+    
+    .btn-cart:hover {
+        background: var(--bg-page);
+        border-color: var(--text-main);
+        color: var(--text-main);
+    }
+</style>
+
+<div class="container product-container">
+    <div class="row g-5">
+        
+        <!-- LEFT SIDE: REIMAGINED GALLERY -->
+        <div class="col-lg-7">
+            <div class="gallery-wrapper">
+                <!-- Vertical Thumbnail Strip -->
+                {% comment %} <div class="thumbnail-strip d-none d-lg-flex">
+                    <div class="thumb-item active"><img src="{% static 'assets/img/product_single_10.jpg' %}" alt=""></div>
+                    <div class="thumb-item"><img src="{% static 'assets/img/product_single_01.jpg' %}" alt=""></div>
+                    <div class="thumb-item"><img src="{% static 'assets/img/product_single_02.jpg' %}" alt=""></div>
+                    <div class="thumb-item"><img src="{% static 'assets/img/product_single_03.jpg' %}" alt=""></div>
+                    <div class="thumb-item"><img src="{% static 'assets/img/product_single_04.jpg' %}" alt=""></div>
+                </div> {% endcomment %}
+
+                <!-- Main Viewport -->
+                <div class="main-image-viewport">
+                    <img src="{% static 'assets/img/shop_10.jpg' %}" alt="Main Dress" id="main-image">
+                </div>
+            </div>
+
+            <!-- Mobile Thumbnails -->
+            <div class="thumbnail-strip d-flex d-lg-none mt-3">
+                <div class="thumb-item active"><img src="{% static 'assets/img/category_img_02.jpg' %}" alt=""></div>
+                <div class="thumb-item"><img src="{% static 'assets/img/product_single_01.jpg' %}" alt=""></div>
+                <div class="thumb-item"><img src="{% static 'assets/img/product_single_02.jpg' %}" alt=""></div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE: STICKY PRODUCT INFO -->
+        <div class="col-lg-5">
+            <div class="product-details-sticky">
+                <span class="brand-tag">Premium Collection</span>
+                <h1 class="product-title-big">Elegant Silk Summer Dress</h1>
+                
+                <div class="price-tag-big">
+                    $45.00
+                    <span class="old-price">$75.00</span>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-muted">A masterpiece of summer fashion. This dress combines luxury silk with a comfortable, breathable fit. Hand-stitched details and a vibrant floral print make it the centerpiece of any wardrobe.</p>
+                </div>
+
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> 100% Organic Silk Fabric</li>
+                    <li><i class="fas fa-check"></i> Hand-painted Floral Design</li>
+                    <li><i class="fas fa-check"></i> Breathable Lightweight Feel</li>
+                    <li><i class="fas fa-check"></i> Machine Washable (Cold)</li>
+                </ul>
+
+                <!-- Size Selector -->
+                <div class="mb-4">
+                    <h6 class="fw-bold small mb-3">SELECT SIZE</h6>
+                    <div class="d-flex gap-2">
+                        <input type="radio" class="btn-check" name="size" id="btn-S" autocomplete="off">
+                        <label class="btn btn-outline-dark px-3 py-2 rounded-3" for="btn-S">S</label>
+                        
+                        <input type="radio" class="btn-check" name="size" id="btn-M" autocomplete="off">
+                        <label class="btn btn-outline-dark px-3 py-2 rounded-3" for="btn-M">M</label>
+                        
+                        <input type="radio" class="btn-check" name="size" id="btn-L" autocomplete="off">
+                        <label class="btn btn-outline-dark px-3 py-2 rounded-3" for="btn-L">L</label>
+                        
+                        <input type="radio" class="btn-check" name="size" id="btn-XL" autocomplete="off">
+                        <label class="btn btn-outline-dark px-3 py-2 rounded-3" for="btn-XL">XL</label>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="btn-action-group">
+                    <button class="btn-premium-buy">BUY NOW</button>
+                    <button class="btn-premium-cart"><i class="fas fa-shopping-cart"></i></button>
+                </div>
+
+                <div class="mt-5 p-4 rounded-4 bg-light d-flex align-items-center gap-4">
+                    <div class="text-center">
+                        <i class="fas fa-truck text-success mb-2"></i>
+                        <p class="m-0 small fw-bold">Fast Delivery</p>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="text-center">
+                        <i class="fas fa-shield-alt text-success mb-2"></i>
+                        <p class="m-0 small fw-bold">2 Year Warranty</p>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="text-center">
+                        <i class="fas fa-undo text-success mb-2"></i>
+                        <p class="m-0 small fw-bold">Easy Returns</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AUTOMATIC SCROLLING RELATED PRODUCTS -->
+<section class="related-section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h2 class="fw-bold m-0">You May Also Like</h2>
+                <p class="text-muted m-0">Handpicked recommendations for you</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-dark rounded-circle" onclick="document.getElementById('relatedScroll').scrollBy({left: -300, behavior: 'smooth'})"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-dark rounded-circle" onclick="document.getElementById('relatedScroll').scrollBy({left: 300, behavior: 'smooth'})"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="related-scroll-container" id="relatedScroll">
+            <!-- Product 1 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_01.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 1">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_1' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 1</h6>
+                    <p class="text-success fw-bold m-0">$45.00</p>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_02.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 2">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_2' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 2</h6>
+                    <p class="text-success fw-bold m-0">$99.00</p>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_03.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 3">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_3' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 3</h6>
+                    <p class="text-success fw-bold m-0">$9.00</p>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_04.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 4">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_4' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 4</h6>
+                    <p class="text-success fw-bold m-0">$12.00</p>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_05.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 5">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_5' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 5</h6>
+                    <p class="text-success fw-bold m-0">$15.00</p>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_06.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 6">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_6' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 6</h6>
+                    <p class="text-success fw-bold m-0">$18.00</p>
+                </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_07.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 7">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_7' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 7</h6>
+                    <p class="text-success fw-bold m-0">$21.00</p>
+                </div>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_08.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 8">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_8' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 8</h6>
+                    <p class="text-success fw-bold m-0">$24.00</p>
+                </div>
+            </div>
+
+            <!-- Product 9 -->
+            <div class="related-card">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                    <img src="{% static 'assets/img/shop_09.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Modern Collection 9">
+                    <div class="hover-overlay"> 
+                        <a href="{% url 'shop_9' %}" class="overlay-btn btn-buy">Buy Now</a>
+                        <a href="#" class="overlay-btn btn-cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <h6 class="fw-bold mb-1">Modern Collection 9</h6>
+                    <p class="text-success fw-bold m-0">$27.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Auto Scroll Script -->
+<script>
+    const scrollContainer = document.getElementById('relatedScroll');
+    let scrollAmount = 0;
+    setInterval(() => {
+        if (scrollAmount >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
+            scrollAmount = 0;
+            scrollContainer.scrollTo({left: 0, behavior: 'smooth'});
+        } else {
+            scrollAmount += 300;
+            scrollContainer.scrollBy({left: 300, behavior: 'smooth'});
+        }
+    }, 3000);
+</script>
+
+{% endblock content %}

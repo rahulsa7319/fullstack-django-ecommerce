@@ -1,0 +1,677 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Fashion Accessories - Happing 
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    /* Professional Design Tokens */
+    :root {
+        --accent-color: #59ab6e;
+        --accent-dark: #3e754d;
+        --accent-soft: #e8f5e9;
+        --text-main: #2d3436;
+        --text-secondary: #636e72;
+        --bg-page: #fdfdfd;
+        --bg-sidebar: #ffffff;
+        --border-color: #edf2f7;
+        --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* VIBRANT SIDEBAR - MATCHING SHOES.HTML STYLE AND FUNCTION */
+    .filter-sidebar-container {
+        padding: 20px;
+        background: var(--bg-sidebar);
+        border-radius: 20px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+        margin-bottom: 2rem;
+    }
+
+    .filter-main-title {
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-main);
+    }
+
+    .filter-main-title i {
+        color: var(--accent-color);
+        background: var(--accent-soft);
+        padding: 10px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+    }
+
+    .filter-group {
+        margin-bottom: 1rem;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+
+    .filter-group:hover {
+        border-color: var(--accent-color);
+    }
+
+    .filter-section-title {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        background: var(--bg-secondary);
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-main);
+        transition: all 0.3s ease;
+    }
+
+    .brand-header { border-left: 4px solid #3498db; }
+    .type-header { border-left: 4px solid #e67e22; }
+    .price-header { border-left: 4px solid #9b59b6; }
+
+    .filter-section-title:not(.collapsed) {
+        background: var(--accent-color);
+        color: white;
+        border-left-width: 0;
+    }
+
+    .filter-section-title i.chevron {
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+    }
+
+    .filter-section-title:not(.collapsed) i.chevron {
+        transform: rotate(180deg);
+        color: white;
+    }
+
+    .filter-content {
+        padding: 1rem 1.25rem;
+        background: white;
+    }
+
+    .filter-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .filter-list li {
+        margin-bottom: 0.8rem;
+    }
+
+    .filter-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.2s;
+    }
+
+    .filter-link:hover {
+        color: var(--accent-color);
+        transform: translateX(5px);
+    }
+
+    .filter-link::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border: 2px solid #ddd;
+        border-radius: 50%;
+        transition: all 0.2s;
+    }
+
+    .filter-link:hover::before {
+        border-color: var(--accent-color);
+        background: var(--accent-color);
+    }
+
+    /* SHOP HEADER */
+    .shop-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .sort-dropdown-btn {
+        background-color: var(--accent-color);
+        color: white;
+        font-weight: 700;
+        padding: 8px 20px;
+        border-radius: 30px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(89, 171, 110, 0.2);
+    }
+
+    /* PRODUCT CARD STYLES */
+    .product-card {
+        border: 1px solid rgba(0,0,0,0.03);
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .product-image-container {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+
+    .product-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1.02);
+        transition: transform 0.6s ease;
+    }
+
+    .product-card:hover .product-image-container img {
+        transform: scale(1.1);
+    }
+
+    /* SPECIAL TARGETING CLASSES */
+    .tumpa {
+        width: 94% !important;
+        height: 74% !important;
+        object-fit: contain !important;
+        margin-top: 90px;
+        transform: none !important;
+    }
+    
+    .yumpa {
+        position: relative !important;
+        bottom: 16px !important;
+    }
+    
+    .jumpa {
+        height: 84% !important;
+        width: 84% !important;
+        position: relative !important;
+        top: 43px !important;
+        left: 18px !important;
+    }
+    
+    .gumpa {
+        position: relative !important;
+        height: 81% !important;
+        width: 81% !important;
+        left: 27px !important;
+        top: 30px !important;
+    }
+
+    #burberry-card .product-image-container img,
+    #herschel-card .product-image-container img {
+        width: 94% !important;
+        height: 88% !important;
+        object-fit: contain !important;
+        margin-top: 24px;
+        transform: none !important;
+    }
+
+    /* CARD DIVIDER HIGHLIGHT */
+    .card-divider {
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(to right, var(--accent-color), var(--accent-dark), var(--accent-color));
+        margin: 0;
+    }
+
+    .product-info {
+        padding: 1.5rem 1rem;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: white;
+    }
+
+    .product-brand {
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: var(--accent-dark);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 8px;
+        background: var(--accent-soft);
+        padding: 3px 15px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .product-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-main);
+        text-decoration: none;
+        margin-bottom: 12px;
+        display: block;
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 5px;
+        width: fit-content;
+    }
+
+    .product-price {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--text-main);
+        background: #f8f9fa;
+        padding: 4px 15px;
+        border-radius: 30px;
+    }
+
+    .g-card-gap {
+        --bs-gutter-x: 2rem;
+        --bs-gutter-y: 2.5rem;
+    }
+
+    @media (max-width: 991px) {
+        .filter-sidebar-container {
+            margin-bottom: 3rem;
+        }
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row">
+        
+        <!-- SIDEBAR - FULL MATCH WITH SHOES.HTML CONTENT & FUNCTION -->
+        <div class="col-lg-3 ps-lg-0">
+            <div class="filter-sidebar-container" style="margin-top: 4.8rem;">
+                
+                <h4 class="filter-main-title">
+                    <i class="fas fa-sliders-h"></i> Filters
+                </h4>
+
+                <!-- Category/Brand Filter -->
+                <div class="filter-group">
+                    <button class="filter-section-title brand-header collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brandList">
+                        <span><i class="fas fa-tag me-2"></i> Brand</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="brandList">
+                        <div class="filter-content">
+                            <ul class="filter-list">
+                                <li><a href="#" class="filter-link">Ray-Ban</a></li>
+                                <li><a href="#" class="filter-link">Gucci</a></li>
+                                <li><a href="#" class="filter-link">Prada</a></li>
+                                <li><a href="#" class="filter-link">Oakley</a></li>
+                                <li><a href="#" class="filter-link">Fossil</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type Filter -->
+                <div class="filter-group">
+                    <button class="filter-section-title type-header collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#typeList">
+                        <span><i class="fas fa-th-large me-2"></i> Category</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="typeList">
+                        <div class="filter-content">
+                            <ul class="filter-list">
+                                <li><a href="#" class="filter-link">Sunglasses</a></li>
+                                <li><a href="#" class="filter-link">Bags</a></li>
+                                <li><a href="#" class="filter-link">Wallets</a></li>
+                                <li><a href="#" class="filter-link">Belts</a></li>
+                                <li><a href="#" class="filter-link">Scarves</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="filter-group">
+                    <button class="filter-section-title price-header collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#priceList">
+                        <span><i class="fas fa-wallet me-2"></i> Price</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="priceList">
+                        <div class="filter-content">
+                            <ul class="filter-list">
+                                <li><a href="#" class="filter-link">Under $50</a></li>
+                                <li><a href="#" class="filter-link">$50 - $150</a></li>
+                                <li><a href="#" class="filter-link">$150 - $300</a></li>
+                                <li><a href="#" class="filter-link">Over $300</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MAIN SHOP CONTENT -->
+        <div class="col-lg-9">
+            <div class="shop-header">
+                <div class="dropdown">
+                    <button class="btn sort-dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Sort By <i class="fas fa-sort-amount-down ms-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
+                <!-- 1: Ray-Ban -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img class="tumpa" src="{% static './assets/img/sunglass1.jpg' %}" alt="Ray-Ban Sunglasses">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_1' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_1' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Ray-Ban</span>
+                            <a href="{% url 'acc_1' %}" class="p-title">Classic Aviator Sunglasses</a>
+                            <div class="p-footer">
+                                <span class="p-price">$150.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2: Oakley -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/sunglass2.jpg' %}" alt="Oakley Sunglasses">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_2' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_2' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Oakley</span>
+                            <a href="{% url 'acc_2' %}" class="p-title">Sport Wayfarer Edition</a>
+                            <div class="p-footer">
+                                <span class="p-price">$120.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3: Gucci -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img class="tumpa" src="{% static './assets/img/sunglass3.jpg' %}" alt="Gucci Sunglasses">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_3' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_3' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Gucci</span>
+                            <a href="{% url 'acc_3' %}" class="p-title">Luxury Gold-Rimmed Shades</a>
+                            <div class="p-footer">
+                                <span class="p-price">$350.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4: Prada -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img class="yumpa" src="{% static './assets/img/bag1.jpg' %}" alt="Prada Bag">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_4' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_4' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Prada</span>
+                            <a href="{% url 'acc_4' %}" class="p-title">Premium Leather Handbag</a>
+                            <div class="p-footer">
+                                <span class="p-price">$450.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5: Fossil -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img class="jumpa" src="{% static './assets/img/wallet1.jpg' %}" alt="Fossil Wallet">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_5' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_5' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Fossil</span>
+                            <a href="{% url 'acc_5' %}" class="p-title">Classic Bi-Fold Wallet</a>
+                            <div class="p-footer">
+                                <span class="p-price">$45.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6: Levis -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img class="gumpa" src="{% static './assets/img/belt.jpg' %}" alt="Levis Belt">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_6' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_6' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Levis</span>
+                            <a href="{% url 'acc_6' %}" class="p-title">Genuine Leather Belt</a>
+                            <div class="p-footer">
+                                <span class="p-price">$35.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7: Nike -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/cap.jpg' %}" alt="Nike Cap">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_7' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_7' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Nike</span>
+                            <a href="{% url 'acc_7' %}" class="p-title">Sport Performance Cap</a>
+                            <div class="p-footer">
+                                <span class="p-price">$25.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8: Burberry -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/Burberry.jpg' %}" alt="Burberry Scarf">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_8' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_8' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Burberry</span>
+                            <a href="{% url 'acc_8' %}" class="p-title">Silk Patterned Scarf</a>
+                            <div class="p-footer">
+                                <span class="p-price">$180.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9: Herschel -->
+                <div class="col">
+                    <div class="p-card">
+                        <div class="p-img-wrapper">
+                            <img src="{% static './assets/img/bag2.jpg' %}" alt="Herschel Backpack">
+                            <div class="p-overlay flex-column gap-2">
+                                <a href="{% url 'acc_9' %}" class="btn-p btn-p-primary w-100 py-2">
+                                    <i class="fas fa-bolt me-2"></i> Buy Now
+                                </a>
+                                <a href="{% url 'acc_9' %}" class="btn-p btn-p-accent w-100 py-2">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-info">
+                            <span class="p-category">Herschel</span>
+                            <a href="{% url 'acc_9' %}" class="p-title">Urban Explorer Backpack</a>
+                            <div class="p-footer">
+                                <span class="p-price">$85.00</span>
+                                <div class="rating text-warning small">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
