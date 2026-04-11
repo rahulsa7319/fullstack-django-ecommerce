@@ -1,0 +1,294 @@
+:root {
+    /* Sophisticated Color Palette */
+    --p-primary: #0f172a;        /* Midnight Slate */
+    --p-primary-light: #1e293b;
+    --p-accent: #4f46e5;         /* Royal Indigo */
+    --p-accent-dark: #3730a3;
+    --p-accent-soft: #eef2ff;
+    --p-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --p-bg: #f8fafc;
+    --p-white: #ffffff;
+    --p-text-head: #0f172a;
+    --p-text-body: #334155;
+    --p-text-muted: #64748b;
+    --p-border: #f1f5f9;
+    
+    /* Refined Shadows */
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    
+    /* Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: var(--p-bg);
+    color: var(--p-text-body);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--p-text-head);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* --- Premium Navbar --- */
+.navbar-premium {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--p-border);
+    padding: 0.75rem 0;
+}
+
+.nav-link-premium {
+    font-weight: 600;
+    color: var(--p-text-head) !important;
+    padding: 0.6rem 1.2rem !important;
+    border-radius: var(--radius-full);
+    transition: var(--transition);
+    position: relative;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+}
+
+.nav-link-premium:hover {
+    color: var(--p-accent) !important;
+    background: var(--p-accent-soft);
+}
+
+.logo-premium {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    letter-spacing: -2px;
+    color: var(--p-primary) !important;
+    transition: var(--transition);
+}
+
+.logo-premium:hover {
+    transform: scale(1.02);
+}
+
+/* --- Global Utilities --- */
+.text-gradient {
+    background: var(--p-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* --- Product Cards --- */
+.p-card {
+    background: var(--p-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--p-border);
+    overflow: hidden;
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.p-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--p-accent-soft);
+}
+
+.p-img-wrapper {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: #f1f5f9;
+}
+
+.p-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.p-card:hover .p-img-wrapper img {
+    transform: scale(1.1);
+}
+
+.p-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.2);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.p-card:hover .p-overlay {
+    opacity: 1;
+}
+
+.p-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.p-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--p-accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.p-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--p-text-head);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.p-title:hover {
+    color: var(--p-accent);
+}
+
+.p-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.p-price {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--p-primary);
+}
+
+/* --- Premium Buttons --- */
+.btn-p {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    text-decoration: none;
+}
+
+.btn-p-primary {
+    background: var(--p-primary);
+    color: var(--p-white);
+}
+
+.btn-p-primary:hover {
+    background: #000;
+    color: var(--p-white);
+    transform: scale(1.02);
+}
+
+.btn-p-accent {
+    background: var(--p-accent);
+    color: var(--p-white);
+}
+
+.btn-p-accent:hover {
+    background: var(--p-accent-dark);
+    color: var(--p-white);
+    transform: scale(1.02);
+}
+
+.btn-p-outline {
+    background: transparent;
+    border: 2px solid var(--p-border);
+    color: var(--p-text-head);
+}
+
+.btn-p-outline:hover {
+    border-color: var(--p-primary);
+    background: var(--p-primary);
+    color: var(--p-white);
+}
+
+/* --- Badge --- */
+.p-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--p-white);
+    color: var(--p-primary);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+/* --- Footer --- */
+.footer-premium {
+    background: var(--p-primary);
+    color: #94a3b8;
+    padding: 5rem 0 2rem;
+}
+
+.footer-premium h5 {
+    color: var(--p-white);
+    margin-bottom: 1.5rem;
+}
+
+.footer-link {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: var(--transition);
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.footer-link:hover {
+    color: var(--p-accent);
+    transform: translateX(5px);
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--p-white);
+    transition: var(--transition);
+    margin-right: 0.75rem;
+}
+
+.social-icon:hover {
+    background: var(--p-accent);
+    color: var(--p-white);
+    transform: translateY(-3px);
+}

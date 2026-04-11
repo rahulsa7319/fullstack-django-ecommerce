@@ -1,0 +1,125 @@
+.main-content{
+    width: 40%;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    margin: 5em auto;
+    display: flex;
+}
+
+/* Left Panel */
+.company__info{
+    background-color: #50607a;   /* Navy */
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.fa-android{
+    font-size:3em;
+    color:#ffffff;
+}
+
+/* Responsive */
+@media screen and (max-width: 640px) {
+    .main-content{width: 90%;}
+    .company__info{
+        display: none;
+    }
+    .login_form{
+        border-top-left-radius:20px;
+        border-bottom-left-radius:20px;
+    }
+}
+
+@media screen and (min-width: 642px) and (max-width:800px){
+    .main-content{width: 70%;}
+}
+
+/* Title */
+.row > h2{
+    color:#1e293b;
+    font-weight: 600;
+}
+
+/* Right Panel */
+.login_form{
+    border-top-right-radius:20px;
+    border-bottom-right-radius:20px;
+    border-top:1px solid #e5e7eb;
+    border-right:1px solid #e5e7eb;
+  background-image:linear-gradient(to right ,rgb(161, 171, 172),rgb(31, 73, 43)
+ );
+ color: white;
+}
+
+/* Form */
+form{
+    padding: 0 2em;
+}
+
+/* Inputs */
+.form__input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #cbd5e1;
+    padding: 1em .5em .5em;
+    padding-left: 2em;
+    outline:none;
+    margin:1.5em auto;
+    transition: all .3s ease;
+    background-color: transparent;
+}
+
+/* Input Focus */
+.form__input:focus{
+    border-bottom-color:#2563eb;  /* Professional Blue */
+    box-shadow: 0 2px 6px rgba(37,99,235,.2); 
+    border-radius: 4px;
+}
+
+/* Button */
+.btn{
+    transition: all .3s ease;
+    width: 60%;
+    border-radius: 40px;
+    color:#ffffff;
+    font-weight: 600;
+    background-image: linear-gradient(to right,rgb(33, 37, 36),rgb(32, 91, 133));  /* Corporate Blue */
+    border: none;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
+.btn:hover, .btn:focus{
+background-image: linear-gradient(to right,rgb(32, 91, 133),rgb(33, 37, 36));
+    color: white;
+}
+
+/* Submit alignment */
+.dm{
+    position: relative;
+    left: 189px;
+    width: 60%;
+}
+
+/* Image */
+.company_title img {
+    width: 301px;
+    position: relative;
+    bottom: 167px;
+    right: 11px;
+    border-radius: 18px;
+    height: 189%;
+    opacity: 0.6;
+    border: 3px solid #ffffff;
+}
+
+/* Footer */
+.footer{
+    color:#475569;
+    font-weight: 500;
+    margin-top: 20px;
+}
