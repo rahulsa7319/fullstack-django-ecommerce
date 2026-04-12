@@ -8,77 +8,67 @@
     <div class="row">
         
         <!-- SIDEBAR -->
-        <div class="col-lg-3">
-            <div class="sidebar-premium sticky-top" style="top: 100px; z-index: 1;">
-                <h4 class="mb-4 d-flex align-items-center" style="font-weight: 800;">
-                    <i class="fas fa-sliders-h me-3 text-success"></i> Filters
+        <div class="col-lg-3 ps-lg-0">
+            <div class="filter-sidebar-container" style="margin-top: 4.8rem;">
+                
+                <h4 class="filter-main-title">
+                    <i class="fas fa-sliders-h"></i> Filters
                 </h4>
 
-                <div class="accordion accordion-flush shadow-sm rounded-4 overflow-hidden" id="filterAccordion">
-                    <!-- Brands -->
-                    <div class="accordion-item border-0">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold p-4 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#brandCollapse">
-                                Brands
-                            </button>
-                        </h2>
-                        <div id="brandCollapse" class="accordion-collapse collapse">
-                            <div class="accordion-body p-2 bg-white">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#" class="filter-link-p">Rolex</a></li>
-                                    <li><a href="#" class="filter-link-p">Omega</a></li>
-                                    <li><a href="#" class="filter-link-p">Seiko</a></li>
-                                    <li><a href="#" class="filter-link-p">Casio</a></li>
-                                    <li><a href="#" class="filter-link-p">Tissot</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Type -->
-                    <div class="accordion-item border-0 mt-1">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold p-4 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#typeCollapse">
-                                Watch Type
-                            </button>
-                        </h2>
-                        <div id="typeCollapse" class="accordion-collapse collapse">
-                            <div class="accordion-body p-2 bg-white">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#" class="filter-link-p">Analog</a></li>
-                                    <li><a href="#" class="filter-link-p">Digital</a></li>
-                                    <li><a href="#" class="filter-link-p">Smart Watches</a></li>
-                                    <li><a href="#" class="filter-link-p">Chronograph</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Price -->
-                    <div class="accordion-item border-0 mt-1">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold p-4 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#priceCollapse">
-                                Price Range
-                            </button>
-                        </h2>
-                        <div id="priceCollapse" class="accordion-collapse collapse">
-                            <div class="accordion-body p-4 bg-white">
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="p1">
-                                    <label class="form-check-label" for="p1">Under $100</label>
-                                </div>
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="p2">
-                                    <label class="form-check-label" for="p2">$100 - $500</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="p3">
-                                    <label class="form-check-label" for="p3">$500 & Above</label>
-                                </div>
-                            </div>
+                <!-- Brands -->
+                <div class="filter-group">
+                    <button class="filter-section-title collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brandList">
+                        <span><i class="fas fa-tag me-2"></i> Brand</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="brandList">
+                        <div class="p-3 bg-white">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#" class="filter-link">Rolex</a></li>
+                                <li><a href="#" class="filter-link">Omega</a></li>
+                                <li><a href="#" class="filter-link">Seiko</a></li>
+                                <li><a href="#" class="filter-link">Casio</a></li>
+                                <li><a href="#" class="filter-link">Tissot</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+
+                <!-- Type -->
+                <div class="filter-group">
+                    <button class="filter-section-title collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#typeList">
+                        <span><i class="fas fa-clock me-2"></i> Watch Type</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="typeList">
+                        <div class="p-3 bg-white">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#" class="filter-link">Analog</a></li>
+                                <li><a href="#" class="filter-link">Digital</a></li>
+                                <li><a href="#" class="filter-link">Smart Watches</a></li>
+                                <li><a href="#" class="filter-link">Chronograph</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="filter-group">
+                    <button class="filter-section-title collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#priceList">
+                        <span><i class="fas fa-wallet me-2"></i> Price</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="collapse" id="priceList">
+                        <div class="p-3 bg-white">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#" class="filter-link">Under $100</a></li>
+                                <li><a href="#" class="filter-link">$100 - $500</a></li>
+                                <li><a href="#" class="filter-link">Over $500</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -492,58 +482,5 @@
 
     </div>
 </div>
-
-<style>
-    .filter-link-p {
-        display: block;
-        padding: 12px 20px;
-        color: var(--p-text-body);
-        text-decoration: none;
-        transition: var(--transition);
-        border-radius: var(--radius-md);
-        font-weight: 500;
-        font-size: 0.95rem;
-    }
-    
-    .filter-link-p:hover {
-        background: var(--p-bg);
-        color: var(--p-accent);
-        transform: translateX(5px);
-    }
-
-    .accordion-button:not(.collapsed) {
-        background-color: transparent;
-        color: var(--p-accent);
-        box-shadow: none;
-    }
-    
-    .accordion-button::after {
-        background-size: 1rem;
-    }
-
-    .pagination-p .page-link {
-        border: none;
-        color: var(--p-text-body);
-        margin: 0 5px;
-        border-radius: var(--radius-md);
-        font-weight: 600;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition);
-    }
-
-    .pagination-p .page-item.active .page-link {
-        background-color: var(--p-primary);
-        color: white;
-        box-shadow: var(--shadow-md);
-    }
-
-    .pagination-p .page-link:hover:not(.active) {
-        background-color: var(--p-border);
-        color: var(--p-primary);
-    }
-</style>
 {% endblock content %}
+
