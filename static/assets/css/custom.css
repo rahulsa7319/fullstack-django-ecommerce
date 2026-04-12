@@ -762,8 +762,8 @@ img {
     }
 
     .sidebar-wrapper {
-        width: 300px !important;
-        left: -300px !important;
+        width: 300px;
+        left: -300px;
     }
     
     /* Login/Register Modal Fixes */
@@ -832,8 +832,8 @@ img {
     }
     
     .sidebar-wrapper {
-        width: 100% !important;
-        left: -100% !important;
+        width: 100%;
+        left: -100%;
     }
 }
 
