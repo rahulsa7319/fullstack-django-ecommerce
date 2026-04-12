@@ -676,3 +676,183 @@
     transform: none !important;
     box-shadow: none !important;
 }
+
+/* --- Responsiveness Fixes --- */
+
+/* Base responsiveness adjustments */
+body {
+    overflow-x: hidden !important;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.navbar-brand span {
+    transition: all 0.3s ease;
+}
+
+/* Mobile (Up to 767px) */
+@media (max-width: 767px) {
+    .navbar {
+        padding: 10px 0 !important;
+    }
+
+    .navbar-brand span {
+        font-size: 2.8rem !important;
+        letter-spacing: -2px !important;
+    }
+    
+    #sidebarOpenTrigger {
+        margin-right: 15px !important;
+        padding: 8px !important;
+    }
+
+    .hero-content h1, 
+    section .container h1 {
+        font-size: 2.8rem !important;
+        letter-spacing: -2px !important;
+        line-height: 1.1 !important;
+    }
+
+    .hero-content h2,
+    section .container h2 {
+        font-size: 2rem !important;
+        letter-spacing: -1px !important;
+    }
+
+    .hero-content p,
+    section .container p.lead,
+    section .container p:not(.small) {
+        font-size: 1.1rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 30px !important;
+    }
+
+    section {
+        padding: 80px 0 !important; /* Reduced from 180px */
+    }
+
+    .discovery-card {
+        height: 380px !important;
+    }
+
+    .discovery-card h3 {
+        font-size: 2rem !important;
+    }
+
+    .category-card {
+        height: 280px !important;
+    }
+
+    .product-wap {
+        height: auto !important;
+        min-height: 480px !important;
+    }
+
+    .btn-p {
+        padding: 15px 35px !important;
+        font-size: 1rem !important;
+    }
+
+    .nav-link-premium {
+        margin: 4px 0 !important;
+        text-align: center;
+    }
+
+    .sidebar-wrapper {
+        width: 300px !important;
+        left: -300px !important;
+    }
+    
+    /* Login/Register Modal Fixes */
+    .modal-dialog {
+        margin: 10px !important;
+    }
+    
+    .auth-form-premium input:not([type="text"]),
+    .form-control-p {
+        padding: 15px 20px 15px 55px !important;
+        font-size: 1rem !important;
+    }
+    
+    .btn-login-premium {
+        padding: 15px !important;
+        font-size: 1rem !important;
+    }
+
+    /* Override aggressive templatemo.css font sizes */
+    body, ul, li, p, a, label, input, div {
+        font-size: 16px !important;
+    }
+    
+    .h1, h1 { font-size: 2.5rem !important; }
+    .h2, h2 { font-size: 2rem !important; }
+    .h3, h3 { font-size: 1.5rem !important; }
+
+    /* Fix for Accessories specific hacky classes */
+    .tumpa, .jumpa, .gumpa {
+        margin-top: 20px !important;
+        height: auto !important;
+        width: 100% !important;
+        left: 0 !important;
+        top: 0 !important;
+        position: static !important;
+    }
+    
+    .yumpa {
+        bottom: 0 !important;
+        position: static !important;
+    }
+
+    /* Product Page Specifics */
+    .main-image-viewport img {
+        height: auto !important;
+        max-height: 400px !important;
+    }
+
+    /* Admin Page Blobs */
+    .blob-1 { width: 250px !important; height: 250px !important; top: -50px !important; right: -50px !important; }
+    .blob-2 { width: 200px !important; height: 200px !important; bottom: -25px !important; left: -25px !important; }
+    .blob-3 { width: 150px !important; height: 150px !important; top: 30% !important; left: 20% !important; }
+
+    .owner-greeting { font-size: 2rem !important; }
+    
+    /* Home Page Hero Spacing */
+    section .container .animate-up {
+        padding: 20px 0 !important;
+    }
+}
+
+/* Very Small Devices (Up to 380px) */
+@media (max-width: 380px) {
+    .navbar-brand span {
+        font-size: 2.2rem !important;
+    }
+    
+    .sidebar-wrapper {
+        width: 100% !important;
+        left: -100% !important;
+    }
+}
+
+/* Tablets (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .navbar-brand span {
+        font-size: 3.8rem !important;
+    }
+
+    section {
+        padding: 120px 0 !important;
+    }
+
+    .hero-content h1,
+    section .container h1 {
+        font-size: 4.5rem !important;
+    }
+
+    .discovery-card {
+        height: 420px !important;
+    }
+}
