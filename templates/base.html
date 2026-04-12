@@ -213,12 +213,9 @@
            const wrapper = container.querySelector('.sidebar-wrapper');
            const overlay = container.querySelector('.sidebar-overlay');
            if (!overlay || !wrapper) return;
-           
            overlay.style.opacity = '0';
-           wrapper.style.left = '-100%'; // More responsive off-screen
-           setTimeout(() => { 
-               container.style.visibility = 'hidden'; 
-           }, 400);
+           wrapper.style.left = '-340px';
+           setTimeout(() => { container.style.visibility = 'hidden'; }, 400);
        };
 
        document.addEventListener('DOMContentLoaded', function() {
@@ -228,33 +225,28 @@
            const openBtn = document.getElementById('sidebarOpenTrigger');
            
            if (openBtn) {
-               openBtn.addEventListener('click', function(e) {
-                   e.preventDefault();
+               openBtn.onclick = (e) => {
                    e.stopPropagation();
                    container.style.visibility = 'visible';
                    overlay.style.opacity = '1';
                    wrapper.style.left = '0';
-               });
+               };
            }
 
-           if (overlay) {
-               overlay.addEventListener('click', function(e) {
-                   e.stopPropagation();
-                   closeSidebar();
-               });
-           }
+           overlay.onclick = (e) => {
+               e.stopPropagation();
+               closeSidebar();
+           };
            
            document.addEventListener('click', (e) => {
-               if (container && container.style.visibility === 'visible' && !wrapper.contains(e.target) && e.target !== openBtn && !openBtn.contains(e.target)) {
+               if (container.style.visibility === 'visible' && !wrapper.contains(e.target) && e.target !== openBtn) {
                    closeSidebar();
                }
            });
 
-           if (wrapper) {
-               wrapper.addEventListener('click', (e) => {
-                   e.stopPropagation();
-               });
-           }
+           wrapper.addEventListener('click', (e) => {
+               e.stopPropagation();
+           });
        });
    </script>
 
