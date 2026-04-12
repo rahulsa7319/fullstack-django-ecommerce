@@ -19,7 +19,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
 
     <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "assets/css/main.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/templatemo.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/premium.css" %}">
     
 
     <!-- Load fonts style after rendering the layout styles -->
@@ -31,27 +33,29 @@
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="{% static "assets/css/slick.min.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "assets/css/slick-theme.css" %}">
+<!--
+-->
 </head>
 
 
 <body class="d-flex flex-column min-vh-100 {% if user.is_superuser %}is-admin{% endif %}">
    <!-- Sidebar System -->
    <div id="mainSidebarContainer" style="position: fixed; inset: 0; z-index: 3000; visibility: hidden;">
-       <div class="sidebar-overlay"></div>
-       <aside class="sidebar-wrapper">
+       <div class="sidebar-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); opacity: 0; transition: 0.4s;"></div>
+       <aside class="sidebar-wrapper" style="position: absolute; left: -340px; top: 0; width: 340px; height: 100vh; background: #fff; transition: 0.4s; box-shadow: 20px 0 50px rgba(0,0,0,0.2); display: flex; flex-direction: column;">
            
            <!-- User Profile Header -->
-           <div class="sidebar-profile-header">
+           <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 60px 30px 40px; color: #fff; position: relative; overflow: hidden;">
                <!-- Decorative Elements -->
-               <div class="sidebar-profile-glow-1"></div>
-               <div class="sidebar-profile-glow-2"></div>
+               <div style="position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: rgba(79, 70, 229, 0.15); filter: blur(40px); border-radius: 50%;"></div>
+               <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; background: rgba(6, 182, 212, 0.1); filter: blur(30px); border-radius: 50%;"></div>
                
-               <div class="sidebar-profile-content">
+               <div style="display: flex; align-items: center; gap: 20px; position: relative; z-index: 2; margin-bottom: 30px;">
                    <!-- Automatic Profile Photo -->
-                   <div class="profile-photo-wrapper">
-                       <div class="profile-photo">
+                   <div style="position: relative;">
+                       <div style="width: 75px; height: 75px; border-radius: 22px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); background: #fff;">
                            {% if user.is_authenticated %}
-                               <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=4f46e5&color=fff&size=128&font-size=0.4" alt="{{ user.username }}">
+                               <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=4f46e5&color=fff&size=128&font-size=0.4" alt="{{ user.username }}" style="width: 100%; height: 100%; object-fit: cover;">
                            {% else %}
                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #64748b, #475569); color: #fff; font-size: 2rem;">
                                    <i class="fas fa-user"></i>
@@ -59,21 +63,21 @@
                            {% endif %}
                        </div>
                        {% if user.is_authenticated %}
-                           <div class="profile-status-online" title="Online"></div>
+                           <div style="position: absolute; bottom: -5px; right: -5px; width: 22px; height: 22px; background: #10b981; border: 3px solid #0f172a; border-radius: 50%;" title="Online"></div>
                        {% endif %}
                    </div>
                    
                    <div>
-                       <h5 class="profile-name">
+                       <h5 class="fw-bold mb-1" style="font-size: 1.4rem; letter-spacing: -0.5px; color: #fff;">
                            {% if user.is_authenticated %}
                                {{ user.username|title }}
                            {% else %}
                                Guest Visitor
                            {% endif %}
                        </h5>
-                       <p class="profile-role">
+                       <p class="small mb-0" style="color: rgba(255,255,255,0.6); font-weight: 500;">
                            {% if user.is_superuser %}
-                               <span class="role-badge">System Owner</span>
+                               <span style="color: #818cf8; background: rgba(129, 140, 248, 0.1); padding: 2px 8px; border-radius: 6px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;">System Owner</span>
                            {% elif user.is_authenticated %}
                                Premium Member
                            {% else %}
@@ -85,49 +89,49 @@
 
                {% if user.is_authenticated %}
                <!-- Profile Quick Stats -->
-               <div class="sidebar-stats">
-                   <div class="stat-item">
-                       <p class="stat-label">Orders</p>
-                       <p class="stat-value">12</p>
+               <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);">
+                   <div class="text-center">
+                       <p class="mb-0" style="font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Orders</p>
+                       <p class="fw-bold mb-0" style="font-size: 1.1rem; color: #fff;">12</p>
                    </div>
-                   <div class="stat-divider"></div>
-                   <div class="stat-item">
-                       <p class="stat-label">Saved</p>
-                       <p class="stat-value">24</p>
+                   <div style="width: 1px; height: 30px; background: rgba(255,255,255,0.1);"></div>
+                   <div class="text-center">
+                       <p class="mb-0" style="font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Saved</p>
+                       <p class="fw-bold mb-0" style="font-size: 1.1rem; color: #fff;">24</p>
                    </div>
-                   <div class="stat-divider"></div>
-                   <div class="stat-item">
-                       <p class="stat-label">Points</p>
-                       <p class="stat-value" style="color: #fbbf24;">850</p>
+                   <div style="width: 1px; height: 30px; background: rgba(255,255,255,0.1);"></div>
+                   <div class="text-center">
+                       <p class="mb-0" style="font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Points</p>
+                       <p class="fw-bold mb-0" style="font-size: 1.1rem; color: #fbbf24;">850</p>
                    </div>
                </div>
                {% endif %}
            </div>
 
            <!-- Sidebar Navigation -->
-           <div class="sidebar-nav-container">
+           <div style="padding: 30px; overflow-y: auto; flex-grow: 1;">
                {% if user.is_superuser %}
-               <p class="sidebar-section-title">System Control Panel</p>
+               <p class="small fw-bold text-muted text-uppercase mb-3" style="letter-spacing: 2px; font-size: 0.75rem;">System Control Panel</p>
                <a href="{% url 'home' %}?view_front=true" class="sidebar-item"><i class="fas fa-desktop"></i> View Front-end</a>
                <a href="{% url 'admin_home' %}" class="sidebar-item" style="color: #4f46e5; background: rgba(79, 70, 229, 0.05);"><i class="fas fa-chart-pie"></i> Admin Dashboard</a>
                <a href="{% url 'add_product' %}" class="sidebar-item"><i class="fas fa-box-open"></i> Manage Products</a>
                <a href="{% url 'add_category' %}" class="sidebar-item"><i class="fas fa-tags"></i> Manage Categories</a>
                <a href="/admin/" class="sidebar-item"><i class="fas fa-user-cog"></i> Django Admin</a>
                
-               <p class="sidebar-section-title" style="margin-top: 2rem;">Site Metrics</p>
+               <p class="small fw-bold text-muted text-uppercase mb-3 mt-4" style="letter-spacing: 2px; font-size: 0.75rem;">Site Metrics</p>
                <a href="#" class="sidebar-item"><i class="fas fa-users"></i> User Database</a>
                <a href="#" class="sidebar-item"><i class="fas fa-shopping-cart"></i> Sales Reports</a>
                {% else %}
-               <p class="sidebar-section-title">Main Navigation</p>
+               <p class="small fw-bold text-muted text-uppercase mb-3" style="letter-spacing: 2px; font-size: 0.75rem;">Main Navigation</p>
                <a href="{% url 'home' %}" class="sidebar-item"><i class="fas fa-home"></i> Home</a>
                <a href="{% url 'shop' %}" class="sidebar-item"><i class="fas fa-shopping-bag"></i> Shop</a>
                <a href="{% url 'shop' %}" class="sidebar-item"><i class="fas fa-bolt"></i> Flash Deals</a>
                
-               <p class="sidebar-section-title" style="margin-top: 2rem;">Account & Orders</p>
+               <p class="small fw-bold text-muted text-uppercase mb-3 mt-4" style="letter-spacing: 2px; font-size: 0.75rem;">Account & Orders</p>
                <a href="#" class="sidebar-item"><i class="fas fa-heart"></i> My Wishlist</a>
                <a href="#" class="sidebar-item"><i class="fas fa-box"></i> Order Tracking</a>
                
-               <p class="sidebar-section-title" style="margin-top: 2rem;">Support</p>
+               <p class="small fw-bold text-muted text-uppercase mb-3 mt-4" style="letter-spacing: 2px; font-size: 0.75rem;">Support</p>
                <a href="{% url 'about' %}" class="sidebar-item"><i class="fas fa-info-circle"></i> About Us</a>
                <a href="{% url 'contact' %}" class="sidebar-item"><i class="fas fa-headset"></i> Help Center</a>
                {% endif %}
@@ -146,6 +150,62 @@
        </aside>
    </div>
 
+   <style>
+       /* Captcha Styles */
+       .captcha-render-box img, .captcha-render-container img {
+           border-radius: 10px;
+           height: 50px;
+           width: auto;
+           display: block;
+           margin: 0 auto 10px;
+       }
+       .captcha-render-box label, .captcha-render-container label {
+           display: none;
+       }
+       .captcha-render-box input[type="text"], .captcha-render-container input[type="text"] {
+           width: 100%;
+           padding: 12px;
+           border-radius: 12px;
+           border: 2px solid #f1f5f9;
+           background: #fff;
+           text-align: center;
+           font-weight: 700;
+           letter-spacing: 2px;
+           text-transform: uppercase;
+       }
+       .captcha-render-box input[type="text"]:focus, .captcha-render-container input[type="text"]:focus {
+           outline: none;
+           border-color: #4f46e5;
+       }
+
+       .sidebar-item {
+           display: flex;
+           align-items: center;
+           gap: 15px;
+           padding: 14px 18px;
+           color: #475569;
+           text-decoration: none;
+           font-weight: 600;
+           border-radius: 12px;
+           transition: all 0.3s ease;
+           margin-bottom: 8px;
+       }
+       .sidebar-item:hover {
+           background: #f1f5f9;
+           color: #4f46e5;
+           transform: translateX(8px);
+       }
+       .sidebar-item i {
+           width: 20px;
+           font-size: 1.1rem;
+           color: #94a3b8;
+           transition: 0.3s;
+       }
+       .sidebar-item:hover i {
+           color: #4f46e5;
+       }
+   </style>
+
    <script>
        const closeSidebar = () => {
            const container = document.getElementById('mainSidebarContainer');
@@ -155,7 +215,7 @@
            if (!overlay || !wrapper) return;
            
            overlay.style.opacity = '0';
-           wrapper.style.left = '-340px';
+           wrapper.style.left = '-100%'; // More responsive off-screen
            setTimeout(() => { 
                container.style.visibility = 'hidden'; 
            }, 400);
@@ -255,7 +315,7 @@
 
                     <!-- Form Side -->
                     <div class="col-lg-7 p-4 p-md-5 bg-white position-relative">
-                        <button type="button" class="btn-close-custom" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" style="top: 20px; right: 20px;"><i class="fas fa-times"></i></button>
                         
                         <div class="modal-form-header mb-4">
                             <h3 class="fw-900" style="font-size: 1.8rem; color: #0f172a; letter-spacing: -0.5px;">Sign In</h3>
@@ -269,42 +329,42 @@
                             {% csrf_token %}
                             
                             <div class="form-row-m mb-3">
-                                <label class="label-premium">Username</label>
-                                <div class="input-premium-wrapper">
-                                    <i class="fas fa-user-circle"></i>
+                                <label class="label-premium" style="font-size: 0.75rem; margin-bottom: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block;">Username</label>
+                                <div class="input-premium-wrapper" style="position: relative;">
+                                    <i class="fas fa-user-circle" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1.2rem; z-index: 10;"></i>
                                     {{ login_form.username }}
                                 </div>
                             </div>
 
                             <div class="form-row-m mb-3">
-                                <label class="label-premium">Phone Number</label>
-                                <div class="input-premium-wrapper">
-                                    <i class="fas fa-phone-alt"></i>
+                                <label class="label-premium" style="font-size: 0.75rem; margin-bottom: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block;">Phone Number</label>
+                                <div class="input-premium-wrapper" style="position: relative;">
+                                    <i class="fas fa-phone-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1.2rem; z-index: 10;"></i>
                                     {{ login_form.phone_number }}
                                 </div>
                             </div>
 
                             <div class="form-row-m mb-3">
-                                <label class="label-premium">Password</label>
-                                <div class="input-premium-wrapper">
-                                    <i class="fas fa-fingerprint"></i>
+                                <label class="label-premium" style="font-size: 0.75rem; margin-bottom: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block;">Password</label>
+                                <div class="input-premium-wrapper" style="position: relative;">
+                                    <i class="fas fa-fingerprint" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1.2rem; z-index: 10;"></i>
                                     {{ login_form.password }}
                                 </div>
                             </div>
 
                             <!-- Captcha -->
                             <div class="form-row-m mb-4">
-                                <div class="captcha-box-premium">
-                                    <div class="captcha-render-container">
+                                <div class="captcha-box-premium" style="padding: 15px; border-radius: 20px; background: #f8fafc; border: 2px solid #f1f5f9;">
+                                    <div class="captcha-render-container" style="position: relative; text-align: center;">
                                         {{ login_form.captcha }}
-                                        <button type="button" class="js-captcha-refresh-m captcha-refresh-btn-p">
+                                        <button type="button" class="js-captcha-refresh-m captcha-refresh-btn-p" style="position: absolute; top: -10px; right: -10px; width: 35px; height: 35px; background: #4f46e5; color: #fff; border: none; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);">
                                             <i class="fas fa-sync-alt" style="font-size: 0.9rem;"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn-login-premium w-100">
+                            <button type="submit" class="btn-login-premium w-100" style="padding: 15px; background: #0f172a; color: #fff; border-radius: 15px; border: none; font-size: 1.1rem; font-weight: 900; transition: 0.3s;">
                                 Log In <i class="fas fa-arrow-right ms-2"></i>
                             </button>
                         </form>
@@ -350,7 +410,7 @@
 
                     <!-- Form Side -->
                     <div class="col-lg-8 p-4 p-md-5 bg-white position-relative">
-                        <button type="button" class="btn-close-custom" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" style="top: 20px; right: 20px;"><i class="fas fa-times"></i></button>
                         
                         <div class="modal-form-header mb-4">
                             <h3 class="fw-900" style="font-size: 1.8rem; color: #0f172a; letter-spacing: -0.5px;">Register</h3>
@@ -365,50 +425,50 @@
                             
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="label-premium">Username</label>
-                                    <div class="input-premium-wrapper">
-                                        <i class="fas fa-user-tag" style="left: 15px; font-size: 1rem;"></i>
+                                    <label class="label-premium" style="font-size: 0.75rem; margin-bottom: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block;">Username</label>
+                                    <div class="input-premium-wrapper" style="position: relative;">
+                                        <i class="fas fa-user-tag" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1rem; z-index: 10;"></i>
                                         {{ register_form.username }}
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="label-premium">Mobile</label>
-                                    <div class="input-premium-wrapper">
-                                        <i class="fas fa-phone-alt" style="left: 15px; font-size: 1rem;"></i>
+                                    <label class="label-premium" style="font-size: 0.75rem; margin-bottom: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block;">Mobile</label>
+                                    <div class="input-premium-wrapper" style="position: relative;">
+                                        <i class="fas fa-phone-alt" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1rem; z-index: 10;"></i>
                                         {{ register_form.phone_number }}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-row-m mb-3">
-                                <label class="label-premium">Email</label>
-                                <div class="input-premium-wrapper">
-                                    <i class="fas fa-envelope" style="left: 15px; font-size: 1rem;"></i>
+                                <label class="label-premium" style="font-size: 0.75rem; margin-bottom: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block;">Email</label>
+                                <div class="input-premium-wrapper" style="position: relative;">
+                                    <i class="fas fa-envelope" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1rem; z-index: 10;"></i>
                                     {{ register_form.email }}
                                 </div>
                             </div>
 
                             <div class="form-row-m mb-3">
-                                <label class="label-premium">Password</label>
-                                <div class="input-premium-wrapper">
-                                    <i class="fas fa-key" style="left: 15px; font-size: 1rem;"></i>
+                                <label class="label-premium" style="font-size: 0.75rem; margin-bottom: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block;">Password</label>
+                                <div class="input-premium-wrapper" style="position: relative;">
+                                    <i class="fas fa-key" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1rem; z-index: 10;"></i>
                                     {{ register_form.password }}
                                 </div>
                             </div>
 
                             <!-- Captcha -->
                             <div class="form-row-m mb-4">
-                                <div class="captcha-box-premium">
-                                    <div class="captcha-render-container">
+                                <div class="captcha-box-premium" style="padding: 15px; border-radius: 20px; background: #f8fafc; border: 2px solid #f1f5f9;">
+                                    <div class="captcha-render-container" style="position: relative; text-align: center;">
                                         {{ register_form.captcha }}
-                                        <button type="button" class="js-captcha-refresh-m captcha-refresh-btn-p">
+                                        <button type="button" class="js-captcha-refresh-m captcha-refresh-btn-p" style="position: absolute; top: -10px; right: -10px; width: 35px; height: 35px; background: #4f46e5; color: #fff; border: none; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);">
                                             <i class="fas fa-sync-alt" style="font-size: 0.9rem;"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn-login-premium w-100" style="padding: 14px; font-size: 1.1rem; font-weight: 800;">
+                            <button type="submit" class="btn-login-premium w-100" style="padding: 14px; background: #4f46e5; color: #fff; border-radius: 15px; border: none; font-size: 1.1rem; font-weight: 800; transition: 0.3s;">
                                 Create Account <i class="fas fa-sparkles ms-2"></i>
                             </button>
                         </form>
@@ -421,6 +481,81 @@
             </div>
         </div>
     </div>
+
+    <style>
+        /* Premium Modal Styles */
+        .fw-900 { font-weight: 900; }
+        .fw-800 { font-weight: 800; }
+        .text-indigo { color: #4f46e5; }
+        
+        .btn-close-custom {
+            position: absolute; top: 30px; right: 30px; width: 45px; height: 45px;
+            background: #f8fafc; border: none; border-radius: 15px; color: #64748b;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+            transition: 0.3s; z-index: 100;
+        }
+        .btn-close-custom:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
+
+        .perk-icon-large {
+            width: 55px; height: 55px; background: rgba(255,255,255,0.1);
+            border-radius: 18px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #4f46e5;
+        }
+
+        .label-premium {
+            display: block; font-size: 0.85rem; font-weight: 800; color: #64748b;
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;
+        }
+
+        .input-premium-wrapper { position: relative; }
+        .input-premium-wrapper i {
+            position: absolute; left: 25px; top: 50%; transform: translateY(-50%);
+            font-size: 1.4rem; color: #94a3b8; transition: 0.3s;
+        }
+        
+        .auth-form-premium input:not([type="text"]) { /* This targets the password and other standard inputs */
+            width: 100%; padding: 22px 30px 22px 70px !important; border-radius: 20px;
+            border: 2px solid #f1f5f9; background: #f8fafc; font-weight: 700; font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Specific overrides for the LoginForm classes */
+        .form-control-p {
+            width: 100%; padding: 22px 30px 22px 70px !important; border-radius: 20px;
+            border: 2px solid #f1f5f9; background: #f8fafc; font-weight: 700; font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .form-control-p:focus {
+            outline: none; border-color: #4f46e5; background: #fff;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.1); transform: translateY(-2px);
+        }
+        .form-control-p:focus + i { color: #4f46e5; }
+
+        .captcha-box-premium {
+            background: #f8fafc; border: 2px solid #f1f5f9; border-radius: 25px; padding: 25px;
+            transition: 0.3s;
+        }
+        .captcha-box-premium:focus-within { border-color: #4f46e5; background: #fff; }
+        
+        .captcha-render-container { position: relative; text-align: center; }
+        .captcha-refresh-btn-p {
+            position: absolute; top: -15px; right: -15px; width: 40px; height: 40px;
+            background: #4f46e5; color: #fff; border: none; border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); transition: 0.3s;
+        }
+        .captcha-refresh-btn-p:hover { transform: rotate(180deg) scale(1.1); background: #3730a3; }
+
+        .btn-login-premium {
+            background: #0f172a; color: #fff; padding: 22px; border-radius: 20px;
+            border: none; font-size: 1.2rem; font-weight: 900; letter-spacing: -0.5px;
+            transition: 0.4s; box-shadow: 0 15px 35px rgba(15, 23, 42, 0.2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .btn-login-premium:hover {
+            background: #4f46e5; transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.4);
+        }
+    </style>
 
     <script>
         $(document).ready(function() {
